@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd " >
+<mapper namespace="com.tarena.dao.IProcessOrderDao">
+	<select id="queryUserWalletById" parameterType="string"
+		resultType="UserWallet">
+		select wallet_id ,
+		user_id,
+		user_money,
+		create_date,
+		is_use,
+		update_date
+		from t_wp_front_user_wallet uw where uw.user_id = #{user_id}
+	</select>
+
+	<insert id="insertBadOrder" parameterType="TradeBadOrder">
+		insert into t_wp_bad_user_profitloss (
+		<trim suffix="" suffixOverrides=",">
+			<if test="id            != null">sys_id,</if>
+			<if test="user_id       != null">user_id,</if>
+			<if test="profitloss_id != null">profitloss_id,</if>
+			<if test="bad_money     != null">bad_money,</if>
+			<if test="order_id      != null">order_id,</if>
+			<if test="bad_type      != null">bad_type,</if>
+			<if test="bad_desc      != null">bad_desc,</if>
+			<if test="bad_time      != null">bad_time,</if>
+			<if test="bad_status    != null">bad_status,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="id            != null">#{id},</if>
+			<if test="user_id       != null">#{user_id},</if>
+			<if test="profitloss_id != null">#{profiloss_id},</if>
+			<if test="bad_money     != null">#{bad_money},</if>
+			<if test="order_id      != null">#{order_id},</if>
+			<if test="bad_type      != null">#{bad_type},</if>
+			<if test="bad_desc      != null">#{bad_desc},</if>
+			<if test="bad_time      != null">#{bad_time},</if>
+			<if test="bad_status    != null">#{bad_status},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="insertBinaryOptionsBuyOrder" parameterType="BinaryOptionsBuyOrder">
+insert into t_wp_front_gdsy_buy_order (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gdsy_order_id      != null">gdsy_order_id,</if>
+			<if test="user_id            != null">user_id,</if>
+			<if test="gdsy_buy_type      != null">gdsy_buy_type,</if>
+			<if test="gdsy_buy_time      != null">gdsy_buy_time,</if>
+			<if test="gdsy_buy_point     != null">gdsy_buy_point,</if>
+			<if test="gdsy_buy_itemcode  != null">gdsy_buy_itemcode,</if>
+			<if test="gdsy_buy_price     != null">gdsy_buy_price,</if>
+			<if test="gdsy_buy_all_price != null">gdsy_buy_all_price,</if>
+			<if test="gdsy_buy_amount    != null">gdsy_buy_amount,</if>
+			<if test="gdsy_buy_brokerage != null">gdsy_buy_brokerage,</if>
+			<if test="is_use             != null">is_use,</if>
+			<if test="gdsy_buy_xz_time   != null">gdsy_buy_xz_time,</if>
+			<if test="gdsy_buy_ratio     != null">gdsy_buy_ratio,</if>
+			<if test="gdsy_buy_itemname  != null">gdsy_buy_itemname,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gdsy_order_id      != null">#{gdsy_order_id},</if>
+			<if test="user_id            != null">#{user_id},</if>
+			<if test="gdsy_buy_type      != null">#{gdsy_buy_type},</if>
+			<if test="gdsy_buy_time      != null">#{gdsy_buy_time},</if>
+			<if test="gdsy_buy_point     != null">#{gdsy_buy_point},</if>
+			<if test="gdsy_buy_itemcode  != null">#{gdsy_buy_itemcode},</if>
+			<if test="gdsy_buy_price     != null">#{gdsy_buy_price},</if>
+			<if test="gdsy_buy_all_price != null">#{gdsy_buy_all_price},</if>
+			<if test="gdsy_buy_amount    != null">#{gdsy_buy_amount},</if>
+			<if test="gdsy_buy_brokerage != null">#{gdsy_buy_brokerage},</if>
+			<if test="is_use             != null">#{is_use},</if>
+			<if test="gdsy_buy_xz_time   != null">#{gdsy_buy_xz_time},</if>
+			<if test="gdsy_buy_ratio     != null">#{gdsy_buy_ratio},</if>
+			<if test="gdsy_buy_itemname  != null">#{gdsy_buy_itemname},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="insertHangingDelistedBuyOrder" parameterType="HangingDelistedBuyOrder">
+		insert into t_wp_front_gzp_buy_order (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gzp_order_id      != null">gzp_order_id,</if>
+			<if test="user_id           != null">user_id,</if>
+			<if test="gzp_buy_type      != null">gzp_buy_type,</if>
+			<if test="gzp_buy_time      != null">gzp_buy_time,</if>
+			<if test="gzp_buy_point     != null">gzp_buy_point,</if>
+			<if test="gzp_buy_itemcode  != null">gzp_buy_itemcode,</if>
+			<if test="gzp_buy_price     != null">gzp_buy_price,</if>
+			<if test="gzp_buy_all_price != null">gzp_buy_all_price,</if>
+			<if test="gzp_buy_amount    != null">gzp_buy_amount,</if>
+			<if test="gzp_buy_brokerage != null">gzp_buy_brokerage,</if>
+			<if test="is_use            != null">is_use,</if>
+			<if test="zc_order_id       != null">zc_order_id,</if>
+			<if test="is_zc             != null">is_zc,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gzp_order_id      != null">#{gzp_order_id},</if>
+			<if test="user_id           != null">#{user_id},</if>
+			<if test="gzp_buy_type      != null">#{gzp_buy_type},</if>
+			<if test="gzp_buy_time      != null">#{gzp_buy_time},</if>
+			<if test="gzp_buy_point     != null">#{gzp_buy_point},</if>
+			<if test="gzp_buy_itemcode  != null">#{gzp_buy_itemcode},</if>
+			<if test="gzp_buy_price     != null">#{gzp_buy_price},</if>
+			<if test="gzp_buy_all_price != null">#{gzp_buy_all_price},</if>
+			<if test="gzp_buy_amount    != null">#{gzp_buy_amount},</if>
+			<if test="gzp_buy_brokerage != null">#{gzp_buy_brokerage},</if>
+			<if test="is_use            != null">#{is_use},</if>
+			<if test="zc_order_id       != null">#{zc_order_id},</if>
+			<if test="is_zc             != null">#{is_zc},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="insertUserProfitLoss" parameterType="UserWallet">
+	  insert into t_wp_front_user_profitloss (
+		<trim suffix="" suffixOverrides=",">
+			<if test="profitloss_id      != null">profitloss_id,</if>
+			<if test="user_id            != null">user_id,</if>
+			<if test="user_money_before  != null">user_money_before,</if>
+			<if test="user_money         != null">user_money,</if>
+			<if test="user_money_after   != null">user_money_after,</if>
+			<if test="money_type         != null">money_type,</if>
+			<if test="create_date        != null">create_date,</if>
+			<if test="is_use             != null">is_use,</if>
+			<if test="order_id        != null">order_id,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="profitloss_id      != null">#{profitloss_id},</if>
+			<if test="user_id            != null">#{user_id},</if>
+			<if test="user_money_before  != null">#{user_money_before},</if>
+			<if test="user_money         != null">#{user_money},</if>
+			<if test="user_money_after   != null">#{user_money_after},</if>
+			<if test="money_type         != null">#{money_type},</if>
+			<if test="create_date        != null">#{create_date},</if>
+			<if test="is_use             != null">#{is_use},</if>
+			<if test="order_id        != null">#{order_id},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="insertBinaryOptionsSellOrder" parameterType="BinaryOptionsSellOrder">
+		insert into t_wp_front_gdsy_sell_order (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gdsy_order_id         != null">gdsy_order_id,</if>
+			<if test="user_id               != null">user_id,</if>
+			<if test="gdsy_buy_type         != null">gdsy_buy_type,</if>
+			<if test="gdsy_buy_time         != null">gdsy_buy_time,</if>
+			<if test="gdsy_buy_point        != null">gdsy_buy_point,</if>
+			<if test="gdsy_buy_itemcode     != null">gdsy_buy_itemcode,</if>
+			<if test="gdsy_buy_price        != null">gdsy_buy_price,</if>
+			<if test="gdsy_buy_all_price    != null">gdsy_buy_all_price,</if>
+			<if test="gdsy_buy_amount       != null">gdsy_buy_amount,</if>
+			<if test="gdsy_buy_brokerage    != null">gdsy_buy_brokerage,</if>
+			<if test="gdsy_buy_ratio        != null">gdsy_buy_ratio,</if>
+			<if test="is_use                != null">is_use,</if>
+			<if test="gdsy_sell_time        != null">gdsy_sell_time,</if>
+			<if test="gdsy_sell_point       != null">gdsy_sell_point,</if>
+			<if test="gdsy_sell_type        != null">gdsy_sell_type,</if>
+			<if test="gdsy_sell_profit_loss != null">gdsy_sell_profit_loss,</if>
+			<if test="broker_id             != null">broker_id,</if>
+			<if test="dept_id               != null">dept_id,</if>
+			<if test="agent_id              != null">agent_id,</if>
+			<if test="settle_id             != null">settle_id,</if>
+			<if test="ce_id            			!= null">ce_id,</if>
+			<if test="ch_id           			!= null">ch_id,</if>
+			<if test="p_id           				!= null">p_id,</if>
+			create_date,
+			<if test="rule           				!= null">rule,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gdsy_order_id         != null">#{gdsy_order_id},</if>
+			<if test="user_id               != null">#{user_id},</if>
+			<if test="gdsy_buy_type         != null">#{gdsy_buy_type},</if>
+			<if test="gdsy_buy_time         != null">#{gdsy_buy_time},</if>
+			<if test="gdsy_buy_point        != null">#{gdsy_buy_point},</if>
+			<if test="gdsy_buy_itemcode     != null">#{gdsy_buy_itemcode},</if>
+			<if test="gdsy_buy_price        != null">#{gdsy_buy_price},</if>
+			<if test="gdsy_buy_all_price    != null">#{gdsy_buy_all_price},</if>
+			<if test="gdsy_buy_amount       != null">#{gdsy_buy_amount},</if>
+			<if test="gdsy_buy_brokerage    != null">#{gdsy_buy_brokerage},</if>
+			<if test="gdsy_buy_ratio        != null">#{gdsy_buy_ratio},</if>
+			<if test="is_use                != null">#{is_use},</if>
+			<if test="gdsy_sell_time        != null">#{gdsy_sell_time},</if>
+			<if test="gdsy_sell_point       != null">#{gdsy_sell_point},</if>
+			<if test="gdsy_sell_type        != null">#{gdsy_sell_type},</if>
+			<if test="gdsy_sell_profit_loss != null">#{gdsy_sell_profit_loss},</if>
+			<if test="broker_id             != null">#{broker_id},</if>
+			<if test="dept_id               != null">#{dept_id},</if>
+			<if test="agent_id              != null">#{agent_id},</if>
+			<if test="settle_id             != null">#{settle_id},</if>
+			<if test="ce_id            			!= null">#{ce_id},</if>
+			<if test="ch_id           			!= null">#{ch_id},</if>
+			<if test="p_id           				!= null">#{p_id},</if>
+			now(),
+			<if test="rule           				!= null">#{rule},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="insertHangingDelistedSellOrder" parameterType="HangingDelistedSellOrder">
+		insert into t_wp_front_gzp_sell_order (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gzp_order_id         != null">gzp_order_id,</if>
+			<if test="user_id              != null">user_id,</if>
+			<if test="gzp_buy_type         != null">gzp_buy_type,</if>
+			<if test="gzp_buy_time         != null">gzp_buy_time,</if>
+			<if test="gzp_buy_point        != null">gzp_buy_point,</if>
+			<if test="gzp_buy_itemcode     != null">gzp_buy_itemcode,</if>
+			<if test="gzp_buy_price        != null">gzp_buy_price,</if>
+			<if test="gzp_buy_all_price    != null">gzp_buy_all_price,</if>
+			<if test="gzp_buy_amount       != null">gzp_buy_amount,</if>
+			<if test="gzp_buy_brokerage    != null">gzp_buy_brokerage,</if>
+			<if test="is_use               != null">is_use,</if>
+			<if test="gzp_sell_time        != null">gzp_sell_time,</if>
+			<if test="gzp_sell_point       != null">gzp_sell_point,</if>
+			<if test="gzp_sell_type        != null">gzp_sell_type,</if>
+			<if test="gzp_sell_zy_point    != null">gzp_sell_zy_point,</if>
+			<if test="gzp_sell_zs_point    != null">gzp_sell_zs_point,</if>
+			<if test="gzp_sell_profit_loss != null">gzp_sell_profit_loss,</if>
+			<if test="broker_id            != null">broker_id,</if>
+			<if test="dept_id              != null">dept_id,</if>
+			<if test="agent_id             != null">agent_id,</if>
+			<if test="settle_id            != null">settle_id,</if>
+			<if test="ce_id            	   != null">ce_id,</if>
+			<if test="ch_id           	   != null">ch_id,</if>
+			<if test="p_id           	   != null">p_id,</if>
+			create_date,
+			<if test="rule           	   != null">rule,</if>
+			<if test="zc_order_id          != null">zc_order_id,</if>
+			<if test="is_zc                != null">is_zc,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="gzp_order_id         != null">#{gzp_order_id},</if>
+			<if test="user_id              != null">#{user_id},</if>
+			<if test="gzp_buy_type         != null">#{gzp_buy_type},</if>
+			<if test="gzp_buy_time         != null">#{gzp_buy_time},</if>
+			<if test="gzp_buy_point        != null">#{gzp_buy_point},</if>
+			<if test="gzp_buy_itemcode     != null">#{gzp_buy_itemcode},</if>
+			<if test="gzp_buy_price        != null">#{gzp_buy_price},</if>
+			<if test="gzp_buy_all_price    != null">#{gzp_buy_all_price},</if>
+			<if test="gzp_buy_amount       != null">#{gzp_buy_amount},</if>
+			<if test="gzp_buy_brokerage    != null">#{gzp_buy_brokerage},</if>
+			<if test="is_use               != null">#{is_use},</if>
+			<if test="gzp_sell_time        != null">#{gzp_sell_time},</if>
+			<if test="gzp_sell_point       != null">#{gzp_sell_point},</if>
+			<if test="gzp_sell_type        != null">#{gzp_sell_type},</if>
+			<if test="gzp_sell_zy_point    != null">#{gzp_sell_zy_point},</if>
+			<if test="gzp_sell_zs_point    != null">#{gzp_sell_zs_point},</if>
+			<if test="gzp_sell_profit_loss != null">#{gzp_sell_profit_loss},</if>
+			<if test="broker_id            != null">#{broker_id},</if>
+			<if test="dept_id              != null">#{dept_id},</if>
+			<if test="agent_id             != null">#{agent_id},</if>
+			<if test="settle_id            != null">#{settle_id},</if>
+			<if test="ce_id            		!= null">#{ce_id},</if>
+			<if test="ch_id           		!= null">#{ch_id},</if>
+			<if test="p_id           		!= null">#{p_id},</if>
+			now(),
+			<if test="rule           		!= null">#{rule},</if>
+			<if test="zc_order_id       	!= null">#{zc_order_id},</if>
+			<if test="is_zc             	!= null">#{is_zc},</if>
+		</trim>
+		)
+	</insert>
+	
+	<delete id="deleteBinaryOptionsBuyOrder" parameterType="string">
+	  delete from t_wp_front_gdsy_buy_order 
+	  where gdsy_order_id = #{gdsy_order_id}
+	</delete>
+	
+		<delete id="deleteHangingDelistedBuyOrder" parameterType="string">
+		delete from t_wp_front_gzp_buy_order 
+	  where gzp_order_id = #{gzp_order_id}
+	</delete>
+	
+	
+	<update id="updateUserWallet" parameterType="UserWallet">
+		update t_wp_front_user_wallet
+		<trim prefix="set" suffixOverrides=",">
+			update_date = now(),
+			<if test="type == 'add'">        user_money  = user_money + #{order_money},</if>
+			<if test="type == 'subtract'">   user_money  = user_money - #{order_money},</if>
+		</trim>
+		where wallet_id = #{wallet_id} 
+	</update>
+</mapper>

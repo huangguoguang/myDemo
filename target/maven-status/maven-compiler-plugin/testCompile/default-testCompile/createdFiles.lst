@@ -1,0 +1,6 @@
+com\tarena\baseTest\SpringTestCase.class
+com\tarena\redis\test\TestJson.class
+com\tarena\redis\test\TestField.class
+com\tarena\redis\test\RedisTestDemo.class
+com\tarena\redis\test\TestSet.class
+com\tarena\redis\test\TestFastJson.class

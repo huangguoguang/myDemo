@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tarena.dao.IUserDao">
+	
+	<!-- 新增用户基本信息 -->
+	<insert id="insertUserInfo" parameterType="com.tarena.entity.UserInfo">
+		insert into t_wp_front_user_info (
+		<trim suffix="" suffixOverrides=",">
+			<if test="user_id  != null and user_id !=''">user_id,</if>
+			<if test="user_name  != null and user_name !=''">user_name,</if>
+			<if test="create_date  != null and create_date !=''">create_date,</if>
+			<if test="is_use  != null and is_use !=''">is_use,</if>
+			<if test="user_ip  != null and user_ip !=''">user_ip,</if>
+			<if test="agent_id  != null and agent_id !=''">agent_id,</if>
+			<if test="settle_id  != null and settle_id !=''">settle_id,</if>
+			<if test="ce_id  != null and ce_id !=''">ce_id,</if>
+			<if test="ch_id  != null and ch_id !=''">ch_id,</if>
+			<if test="user_mobile  != null and user_mobile !=''">user_mobile,</if>
+			<if test="broker_id  != null and broker_id !=''">broker_id,</if>
+			<if test="p_id  != null and p_id !=''">p_id,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="user_id  != null and user_id !=''">#{user_id},</if>
+			<if test="user_name  != null and user_name !=''">#{user_name},</if>
+			<if test="create_date  != null and create_date !=''">#{create_date},</if>
+			<if test="is_use  != null and is_use !=''">#{is_use},</if>
+			<if test="user_ip  != null and user_ip !=''">#{user_ip},</if>
+			<if test="agent_id  != null and agent_id !=''">#{agent_id},</if>
+			<if test="settle_id  != null and settle_id !=''">#{settle_id},</if>
+			<if test="ce_id  != null and ce_id !=''">#{ce_id},</if>
+			<if test="ch_id  != null and ch_id !=''">#{ch_id},</if>
+			<if test="user_mobile  != null and user_mobile !=''">#{user_mobile},</if>
+			<if test="broker_id  != null and broker_id !=''">#{broker_id},</if>
+			<if test="p_id  != null and p_id !=''">#{p_id},</if>
+		</trim>
+		)
+	</insert>
+	
+	
+	<!-- 新增用户登录信息 -->
+	<insert id="insertUserLoginInfo" parameterType="com.tarena.entity.UserInfo">
+		insert into t_wp_front_user_login (
+		<trim suffix="" suffixOverrides=",">
+			<if test="user_id  != null and user_id  !=''">user_id,</if>
+			<if test="user_mobile  != null and user_mobile !=''">user_mobile,</if>
+			<if test="user_wxid  != null and user_wxid !=''">user_wxid,</if>
+			<if test="user_pay_id  != null and user_pay_id !=''">user_pay_id,</if>
+			<if test="user_password  != null and user_password !=''">user_password,</if>
+			<if test="user_login_id  != null and user_login_id !=''">user_login_id,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="user_id  != null and user_id !=''">#{user_id},</if>
+			<if test="user_mobile  != null and user_mobile !=''">#{user_mobile},</if>
+			<if test="user_wxid  != null and user_wxid !=''">#{user_wxid},</if>
+			<if test="user_pay_id  != null and user_pay_id  !=''">#{user_pay_id},</if>
+			<if test="user_password  != null and user_password !=''">#{user_password},</if>
+			<if test="user_login_id  != null and user_login_id !=''">#{user_login_id},</if>
+		</trim>
+		)
+	</insert>
+	
+	
+	<!-- 新增用户钱包信息 -->
+	<insert id="insertUserWallet" parameterType="UserInfo">
+		insert into t_wp_front_user_wallet (
+		<trim suffix="" suffixOverrides=",">
+			<if test="wallet_id  != null and wallet_id   !=''">wallet_id,</if>
+			<if test="user_id  != null and user_id !=''">user_id,</if>
+			<if test="user_money  != null and user_money   !=''">user_money,</if>
+			<if test="create_date  != null and create_date !=''">create_date,</if>
+			<if test="is_use  != null and is_use!=''">is_use,</if>
+		</trim>
+		) values (
+		<trim suffix="" suffixOverrides=",">
+			<if test="wallet_id  != null and wallet_id !=''">#{wallet_id},</if>
+			<if test="user_id  != null and user_id !=''">#{user_id},</if>
+			<if test="user_money  != null and user_money !=''">#{user_money},</if>
+			<if test="create_date  != null and create_date !=''">#{create_date},</if>
+			<if test="is_use  != null and is_use!=''">#{is_use},</if>
+		</trim>
+		)
+	</insert>
+	
+	
+	<!-- 修改用户密码 -->
+	<update id= "modifyUserPassword" parameterType="map">
+	   UPDATE t_wp_front_user_login SET user_password = #{user_password}
+	   WHERE user_mobile = #{user_mobile}
+	</update>
+	
+	
+	<!-- 查询用户的余额 -->
+	<select id="queryUserMoney" parameterType="string" resultType="map">
+	  SELECT user_money FROM t_wp_front_user_wallet WHERE user_id = #{user_id}
+	</select>
+	
+	
+	<!-- 查询代理商的appid -->
+	<select id="queryAgentInfoByAgentCode" parameterType="string" resultType="map">
+	  SELECT dept_app_id,dept_app_secret FROM t_wp_back_dept_info WHERE DEPT_CODE = #{agent_code}
+	</select>
+	
+	
+	<!-- 更改经纪人的状态 -->
+	<update id="updateBrokerStatus" parameterType="map">
+		UPDATE t_wp_front_broker SET is_use = '8' WHERE dept_code = #{dept_code} AND broker_incode like CONCAT(CONCAT('%', #{broker_incode}), '%')
+	</update>
+	
+	
+		<!-- 更改用户的openID -->
+	<update id="updateUserOpenID" parameterType="map">
+		UPDATE t_wp_front_user_login SET user_wxid = #{user_wxid} WHERE user_id = #{user_id}
+	</update>
+	
+	<!-- 查询固定收益商品 -->
+	<select id="findGdsyItem" parameterType="string" resultType="map">
+		 SELECT
+				gdsy_name,
+				gdsy_number
+			FROM
+				t_wp_gdsy_info t
+			WHERE
+				is_use = 1
+			AND gdsy_id IN (
+				SELECT
+					gdsy_id
+		  FROM
+					t_wp_dept_gdsy
+			WHERE
+					dept_id = (
+					SELECT dept_id FROM T_WP_BACK_DEPT_INFO WHERE DEPT_CODE = #{agent_code}
+					)
+					
+			) GROUP BY gdsy_type
+	</select>
+	
+	
+	<!-- 查询挂摘牌商品 -->
+	<select id="findGzpItem" parameterType="string" resultType="map">
+			SELECT
+					gzp_name,
+					gzp_number
+			FROM
+				  t_wp_gzp_info t
+			WHERE
+				  is_use = 1
+			AND gzp_id IN (
+				  SELECT
+					gzp_id
+				  FROM
+					t_wp_dept_gzp
+				WHERE dept_id =
+					(
+					SELECT dept_id FROM T_WP_BACK_DEPT_INFO WHERE DEPT_CODE = #{agent_code}
+					)) GROUP BY gzp_type
+	</select>
+		<!-- 查询商城历史订单 -->
+	<select id="queryShoppingOrder" parameterType="map" resultType="map">
+			SELECT
+				*
+			FROM
+				`t_wp_front_shopping_order`
+			WHERE 
+				user_id = #{user_id}
+				and is_use = 1
+				and status != 3
+		</select>
+		
+		
+		<select id="getItemImage" parameterType="map" resultType="map">
+			SELECT
+				*
+			FROM
+				`t_wp_goods_image`
+			WHERE 
+				type = 1
+			order by is_order
+		</select>
+</mapper>

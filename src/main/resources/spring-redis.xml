@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:redis="http://www.springframework.org/schema/redis"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+														 http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+														 http://www.springframework.org/schema/cache 
+														 http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
+														 http://www.springframework.org/schema/redis 
+														 http://www.springframework.org/schema/redis/spring-redis.xsd">
+
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+	<bean id="cacheManager" class="com.tarena.common.component.redis.RedisCacheManager">
+		<property name="redisTemplate" ref="redisTemplate" />
+		<property name="expires">
+			<map>
+				<entry key="sessionCache" value="1800" />
+			</map>
+		</property>
+		<property name="configClass" value="com.tarena.constants.CacheConstants" />
+		<!-- <property name="transactionAware" value="true" /> -->
+	</bean>
+
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+		<property name="password" value="${redis.password}" />
+		<property name="poolConfig" ref="poolConfig" />
+	</bean>
+
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxIdle" value="${redis.maxIdle}" />
+		<property name="maxTotal" value="${redis.maxTotal}" />
+		<property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+	</bean>
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="keySerializer" ref="stringRedisSerializer" />
+		<property name="hashKeySerializer" ref="jdkRedisSerializer" />
+	</bean>
+
+	<bean id="stringRedisSerializer"
+		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+
+	<bean id="jdkRedisSerializer"	class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+
+	<bean id="redisService" class="com.tarena.redis.service.impl.RedisServiceImpl">
+		<property name="redisTemplate" ref="redisTemplate"></property>
+	</bean>
+	
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="distributedLock" class="com.tarena.lock.RedisBasedDistributedLock">
+		<property name="redisTemplate" ref="redisTemplate"></property>
+	</bean>
+</beans>

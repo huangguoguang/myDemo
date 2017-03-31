@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- 引入jdbc配置文件 -->
+	<!-- <context:property-placeholder location="classpath:properties/jdbc.properties"/> -->
+	<bean id="configProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/jdbc.properties</value>
+				<value>classpath:properties/mongodb.properties</value>
+				<value>classpath:properties/redis.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory" class="com.tarena.common.component.session.SessionFactory">
+		<property name="sessionManager" ref="redisSessionManager" />
+	</bean>
+
+	<bean id="sessionManager" class="com.tarena.common.component.session.SessionManager"
+		abstract="true" />
+
+	<bean id="redisSessionManager" class="com.tarena.common.component.redis.RedisSessionManager" parent="sessionManager">
+		<property name="redisTemplate" ref="redisTemplate" />
+		<property name="sessionCacheName" value="sessionCache" />
+	</bean>
+
+	<bean id="propertyConfigurer"	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>
+
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}"></property>
+	</bean>
+
+	<!-- 自动扫描所有的xxMapper.xml对应的mapper接口文件，这样就不用一个个手动配置Mapper的映射 只要Mapper接口类和Mapper映射文件对应起来就可以了 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tarena.dao"></property>
+	</bean>
+
+	<!-- 配置mybatis的文件，mapperLocations配置xxMapper.xml文件位置，configLocation 配置mybatis-config文件位置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.tarena.entity,com.tarena.trade.entity" />
+		<property name="mapperLocations" value="classpath*:com/tarena/mapper/**/*.xml" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+	</bean>
+	
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 配置事务特性 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 拦截器方式配置事务 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="process*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.tarena.service.*.*(..))" id="transactionPointcut"/>
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
+	</aop:config>
+
+	<!-- 自动扫描注解的bean -->
+	<context:component-scan base-package="com.tarena.common.component"/>
+	<context:component-scan base-package="com.tarena.service" />
+	<context:component-scan base-package="com.tarena.mongo.service" />
+	<context:component-scan base-package="com.tarena.*.listener"/>
+</beans>

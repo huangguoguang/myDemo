@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	     xmlns:xsi          = "http://www.w3.org/2001/XMLSchema-instance" 
+	     xmlns:p            = "http://www.springframework.org/schema/p"  
+	     xmlns:mongo        = "http://www.springframework.org/schema/data/mongo"  
+	     xmlns:context      = "http://www.springframework.org/schema/context"
+	     xsi:schemaLocation = "http://www.springframework.org/schema/beans   
+							               http://www.springframework.org/schema/beans/spring-beans.xsd 
+							               http://www.springframework.org/schema/data/mongo  
+							            	 http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
+							             	 http://www.springframework.org/schema/context 
+														 http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo，replica-set设置集群副本的ip地址和端口 -->
+	<mongo:db-factory dbname="${mongo.dbname}" mongo-ref="mongo" id="mongoDbFactory"/>
+	<mongo:mongo-client host="${mongo.host}" port="${mongo.port}" id="mongo">
+		<mongo:client-options connections-per-host="${mongo.connectionsPerHost}"
+													threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+													connect-timeout="${mongo.connectTimeout}" 
+													socket-timeout="${mongo.socketTimeout}"
+													socket-keep-alive="true" 
+													max-wait-time="${mongo.maxWaitTime}"/>
+	</mongo:mongo-client>
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+	</bean>
+	
+	<bean id="mongoDbBaseDao" class="com.tarena.mongo.service.MongodbBaseDao">
+		<property name="mongoTemplate" ref="mongoTemplate"></property>
+	</bean>
+
+	<context:annotation-config/>
+</beans>

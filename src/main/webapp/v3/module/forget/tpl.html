@@ -1,0 +1,34 @@
+<div class="login-box">
+	<div class="user-img">
+		<div class="img"></div>
+	</div>
+
+	<div class="input-group">
+		<div class="input">
+			<i>账号</i>
+			<input type="tel" name="login_name" placeholder="手机号码或用户ID" value="" autocomplete="off" maxlength="16" />
+		</div>
+		<div class="input code">
+			<i>验证码</i>
+			<input type="text" name="validate_code" placeholder="请输入手机验证码" autocomplete="off" maxlength="6" />
+			<s>获取验证码</s>
+		</div>
+		<div class="change_get_code">收不到短信，试试语音验证码</div>
+		<div class="input">
+			<i>登录密码</i>
+			<input type="password" name="user_password" placeholder="请输入新的登录密码" autocomplete="off" maxlength="16" />
+		</div>
+		<div class="input">
+			<i>确认密码</i>
+			<input type="password" name="user_password_2" placeholder="请确认新的登录密码" autocomplete="off" maxlength="16" />
+		</div>
+	</div>
+	
+	<div class="submitbox">
+		<i class="submit">确认</i>
+	</div>
+	
+	<div class="other tc">
+		<i hash='login/<%=agent_code%>/<%=count%>'>用户登录</i><s>|</s><i hash='reg/<%=agent_code%>/<%=count%>'>新用户注册</i>
+	</div>
+</div>

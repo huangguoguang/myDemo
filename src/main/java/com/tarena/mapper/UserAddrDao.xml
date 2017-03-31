@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd " >
+<mapper	namespace="com.tarena.dao.IUserAddrDao">
+	<select id="getDefaultAddr" parameterType="UserInfo" resultType="map">
+		select * from 
+			t_wp_front_user_addr 
+		where 
+			user_id = #{user_id}
+		and 
+			is_use = '1'
+		order by is_default ASC,create_date DESC LIMIT 1;
+	</select>
+</mapper>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="" type="image/x-icon" />
+<meta http-equiv="Expires" CONTENT="-1">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<link name="css" rel="stylesheet" href="" />
+<title>微交易</title>
+</head>
+<body>
+<div class="container"></div>
+<footer class="footer"></footer>
+<script>
+	var bust = "@@timestamp", //版本号
+		//serverUrl = 'http://192.168.1.123:8080/', //Api域名
+		serverUrl = 'http://127.0.0.1:8080/', //Api域名
+		baseUrl = "/dist/", //资源域名
+		wsUrl = "ws://192.168.1.21:8087"  //推送服务域名
+		payUrl ="http://mp.weixin.qq.com/s?__biz=MzI3NDM5MDE0Mg==&mid=100000003&idx=1&sn=7e0d27facdbdf11abfd158b294b01eff&scene=18#wechat_redirect" //资源路径
+	;
+	bust=(new Date()).getTime();
+	document.write('\<script data-main="'+ baseUrl +'main.js?bust='+ bust +'" src="'+ baseUrl +'libs/require.js?bust='+ bust +'"><\/script>');
+</script>
+</body>
+</html>
