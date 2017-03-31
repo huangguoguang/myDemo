@@ -9,5 +9,8 @@ public class TestNull {
     System.out.println(sellOrder.getRollback());
     System.out.println("2".equals(sellOrder.getRollback()));
     System.out.println("2".equals(null));
+    
+    
+    System.out.println("");
   }
 }
